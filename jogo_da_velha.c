@@ -83,30 +83,23 @@ int pode_jogar(int i, int j, char m[][TAM]){
   else
     return 0;  
 }
-int ganhou_jogo(char m[][TAM]){
-  int contx = 0, contO = 0, contx1 = 0, contO1 = 0;
+int ganhou_jogo(char m[][TAM]){  
   int somatestex = 0, somatesteo = 0, empate = 0;
   for(int i = 0; i<3; i++){
     for(int j = 0; j<3; j++){
       if(m[i][j]=='X')
           empate++;
         else if(m[i][j]=='O')
-          empate++;    
-      if(i == j){
-        if(m[i][j]=='X')
-          contx++;
-        else if(m[i][j]=='O')
-          contO++;              
-      }
-      if(j+i == TAM-1){
-        if(m[i][j]=='X')
-          contx1++;
-        else if(m[i][j]=='O')
-          contO1++;  
-      }
-       
+          empate++;        
     }
   }
+  if(empate == 9)
+    return -1; 
+    
+  if(m[0][0] == m[1][1] && m[0][0]==m[2][2])
+    return 1;
+  else if(m[0][2] == m[1][1] && m[2][0])
+    return 1; 
   int l = 0;
   
   while(l<3){
@@ -116,8 +109,8 @@ int ganhou_jogo(char m[][TAM]){
       else if(m[l][j]=='O')
         somatesteo++;
     }
-     if(somatesteo==3 || somatestex==3)
-      break;
+    if(somatesteo==3 || somatestex==3)
+      return 1;
     somatesteo = 0;
     somatestex = 0; 
     l++;
@@ -134,18 +127,14 @@ int ganhou_jogo(char m[][TAM]){
         somatesteo2++;        
     }   
     if(somatesteo2==3 || somatestex2==3)
-      break;
+      return 1;
     somatesteo2 = 0;
     somatestex2 = 0; 
     
     c++;
   }
-  if(contx==3 || contO==3 || contO1 == 3 || contx1 == 3 || somatesteo == 3 || somatestex == 3 || somatesteo2 == 3 || somatestex2 ==3)
-    return 1; 
-  else if(empate == 9)
-    return -1; 
-  else
-    return 0;
+   
+  return 0;
 }
 
 
